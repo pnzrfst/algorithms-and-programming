@@ -1,19 +1,24 @@
+/***********************************************************************************************
+ **************************************** MASTER SENHA  ****************************************
+ ***** CRIADORES: Alison Brito & Daniel Rosso & Gabriel Alves & Luiz Carlos & Romulo Cesar *****
+ ***************************************** DATA: 05/26 *****************************************
+ ***********************************************************************************************/
+
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>
 using namespace std;
 
-#define CLR (cout << "\33c")
-#define TRIES 9
-
 int main() {
-	while (true){
+	int maxTentativas = 9;
+	bool loop = true;
+	while (loop == true){
 		bool jogar = false;
 		char option;
 		// enquanto o usuario escolher opcoes no menu, o loop se repete, qualquer coisa que nao e uma opcao inicia o jogo
 		// mais tarde vamos voltar aqui, o unico jeito de sair desse loop enquanto o  programa executa usando a opcao 'e'
 		do{
-		CLR;
+			cout << "\33c";
 			cout << "\t### MENU ###\n"
 				"\t  1-[J]ogar\n"
 				"\t  2-[s]obre\n"
@@ -23,33 +28,36 @@ int main() {
 
 			switch (option){
 				case 's': case 'S': case '2': {
-								      CLR;
+								      cout << "\33c";
 								      cout << "\t *** CRIADORES ***\n"
 									      "\t*~ Allison Brito ~*\n"
 									      "\t*~ Daniel Rosso ~*\n"
-									      "\t*~ Gabriel ~*\n"
+									      "\t*~ Gabriel Alves ~*\n"
 									      "\t*~ Romulo Cesar ~*\n"
 									      "\t--- DATA: 05\\26 ---\n"
 									      "\t§§§ PROFESSOR §§§\n"
-									      "\t  Lucas Debatin\n"
+									      "\t  Rafael Balotin\n"
 									      "\n\tENTER para voltar ao menu";
 								      cin.ignore();
-								      string continuar;
-								      getline(cin, continuar);
+								      cin.ignore();
 								      break;
 							      };
 				case 'e': case 'E': case '3': {
 								      cout << "Ate a proxima!\n";
 								      return 0;
 							      };
+				case 'j': case'J': case '1': {
+								     cout << "\33c";
+								     jogar = true;
+								     break;
+							     };
 				default: {
-						 CLR;
-						 jogar = true;
-						 break;
+						 cout << "Opcao incorreta";
+						 cin >> option;
 					 };
-			};
 
-		}while (!jogar);
+			}
+		}while (jogar == false);
 
 		int n1, n2, n3, n4;
 		bool saoIguais=false;
@@ -60,44 +68,57 @@ int main() {
 
 			do{
 				n1 = rand()%10;
-			}while (n1 > 6);
+			}while (n1 > 6 || n1 < 1);
 
 			do{
 				n2 = rand()%10;
-			}while (n2 > 6);
+			}while (n2 > 6 || n2 < 1);
 
 			do{
 				n3 = rand()%10;
-			}while (n3 > 6);
+			}while (n3 > 6 || n3 < 1);
 
 			do{
 				n4 = rand()%10;
-			}while (n4 > 6);
+			}while (n4 > 6 || n4 < 1);
 
 			saoIguais = n1 == n2 || n2 == n4 || n1 == n3 || n3 == n4 || n2 == n3 || n1 == n4;
 		}while(saoIguais);
+		// comente o cout e remova o comentario do numeros gerados para testar com mais facilidade
 		//cout << "Numeros gerados: " << n1 << n2 << n3 << n4 << endl;
-		CLR;
+		cout << "\33c";
+
+
 		//numero gerado, agora o usuario esta jogando!
 		bool jogando = true;
 		int tentativa = 0;
 
-		while (jogando){
-			//o valor do palpite pode ser enorme, pra circunventar isso vamos criar uma variavel gigantesca
+		while (jogando == true){
 			int palpite;
-			do{
-				cout << "Digite seu palpite de quatro digitos menores que 6: ";
-				cin >> palpite;
-			}while (palpite <=0 || palpite > 6666);
-
-
-			//separamos o numero inserido pelo usuario
+			bool saoIguaisPalpite = false;
+			bool saoZero = false;
 			int p1, p2, p3, p4;
-			p1 = palpite / 1000;
-			p2 = (palpite / 100) % 10;
-			p3 = (palpite / 10) % 10;
-			p4 = palpite % 10;
+			do{
+				// sempre reiniciamos os parametros do palpite, para evitar que variaveis
+				// do palpite passado retornem a um novo palpite
+				saoZero = false; saoIguaisPalpite = false; palpite = 0;
 
+				cout << "Digite seu palpite de quatro digitos diferentes menores que 6 e maiores que 0: ";
+				cin >> palpite;
+
+				//separamos o numero inserido pelo usuario
+				p1 = palpite / 1000;
+				p2 = (palpite / 100) % 10;
+				p3 = (palpite / 10) % 10;
+				p4 = palpite % 10;
+
+				//aqui vemos se os numeros do palpite sao compativeis com as regas de jogo
+				saoIguaisPalpite = p1 == p2 || p2 == p4 || p1 == p3 || p3 == p4 || p2 == p3 || p1 == p4;
+				if (p1 == 0 || p2 == 0 || p3 == 0 || p4 ==0){
+					saoZero = true;
+				};
+
+			}while (palpite <=1 || palpite > 6666 || saoIguaisPalpite || saoZero);
 			//cout << p1 << p2 << p3 << p4;
 
 			int correto = 0, meioCorreto = 0;
@@ -120,7 +141,7 @@ int main() {
 				cout << "!!! *~  Parabens, voce acertou o numero! ~* !!!\n";
 				jogando = false;
 			}else {
-				cout << "\nTentativas restantes: " << TRIES - tentativa << endl;
+				cout << "\nTentativas restantes: " << maxTentativas - tentativa << endl;
 				cout << "\t-- " << p1 << p2 << p3 << p4 << " --\n";
 				cout << correto << " Numero(s) correto(s), no lugar correto \n";
 				cout << meioCorreto <<" Numero(s) correto(s), no lugar errado \n";
@@ -128,7 +149,7 @@ int main() {
 				tentativa ++;
 			}
 			//se o numero de tentativas chegar ao maximo, o jogo acaba, mas a variavel de ganho continua falsa
-			if (tentativa > TRIES) {
+			if (tentativa > maxTentativas) {
 				cout << "Voce perdeu, mas nao desista!\n";
 				jogando = false;
 			}
@@ -136,7 +157,6 @@ int main() {
 		// aqui nos saimos do loop "jogando", vamos de volta ao topo do loop principal
 		cout << "ENTER para voltar ao menu principal";
 		cin.ignore();
-		string continuar;
-		getline(cin, continuar);
+		cin.ignore();
 	}
 }
