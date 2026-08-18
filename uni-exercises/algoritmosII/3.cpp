@@ -24,7 +24,6 @@ int main () {
 }
 
 
-
 int acharMaior(int v[], int tam){
     int maior = v[0];
 
