@@ -126,3 +126,31 @@ float calcMediana(vector <int> userVect) {
 }
 
 
+struct Foo {
+    string something;
+    int age;
+    string address;
+};
+
+struct Post {
+    string title;
+    string authoredBy;
+    string content;
+    vector<string> comments;
+};
+
+struct User {
+    string email;
+    string password;
+    Post lastPost;
+    string getLastPostId;
+};
+
+
+Foo a = {"Ana", 12, "Rua do lado de lá."};
+
+Foo b = {"Thiago", 13, "Rua do lado daqui"};
+
+string getLastPostId( User user ){
+    return user.email;
+} 
