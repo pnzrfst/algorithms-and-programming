@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstdlib>
-#include "game.h"
+#include "game.h.cpp"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ void fillMatrix(int matrix[MaxSize][MaxSize], Point currentUserLocation, Point t
     }
 
     matrix[currentUserLocation.x][currentUserLocation.y] = 1;
-    matrix[treasureLocation.x][treasureLocation.y] = 0;
+    matrix[treasureLocation.x][treasureLocation.y] = 4;
 }
 
 void showMatrix(int matrix[MaxSize][MaxSize]) {
@@ -49,11 +49,11 @@ int getValidSteps () {
         cout << "\n---------------- Informe quantos passos quer dar ----------------\n";
         cin >> steps;
 
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(1000, '\n');
-            cout << "---------------->(erro): Entrada inválida. Digite um número inteiro positivo.\n";
-            continue;
+        if (cin.fail()) { //this .fail() method is to prevent our user to insert a different type than int to steps.
+            cin.clear();  // this method clears our cin buffer, to allow our user to insert a different value.
+            cin.ignore(1000, '\n'); // a little debounce before feedbacking our user.
+            cout << "---------------->(erro): Entrada inválida. Digite um valor válido..\n";
+            continue; // to continue within our do while loop.
         }
 
         if (steps <= 0) {

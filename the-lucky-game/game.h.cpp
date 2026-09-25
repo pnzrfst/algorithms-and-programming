@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#define MaxSize 15
+#define MaxSize 4
 
 struct Point {
     int x = {};
