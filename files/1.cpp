@@ -21,7 +21,7 @@ int main () {
 
     char buffer[256];
     int counter = 0;
-    
+
     char current_word[256];
 
     while(fgets(buffer, sizeof(buffer), file) != NULL) {
@@ -29,7 +29,7 @@ int main () {
         sscanf(buffer, "%s", current_word);
 
         char *inverted_word = invertWord(current_word);
-        
+
         if(areTheyPalindrome(current_word, inverted_word)){
             cout << current_word << "\n";
             cout << inverted_word << "\n";
@@ -51,12 +51,12 @@ int main () {
 
 char *invertWord(char *word) {
     char* finish = word;
-    
+
     while(*finish != '\0') {
         finish++;
     }
 
-    char* inverted_word = new char[finish - word +1];
+    char* inverted_word = new char[finish - word + 1];
     char* start = inverted_word;
 
     while(finish > word) {
